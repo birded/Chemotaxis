@@ -1,5 +1,3 @@
-//weird when mouse < Y and when mouse < x
-
 Bacteria [] colony;
 
 void setup(){
@@ -13,7 +11,7 @@ void setup(){
  }   
 void draw()   
  {    
- 	background(180);
+ 	background(120);
  	for(int i = 0 ; i<colony.length ; i++){
  		colony[i].walk();
  		colony[i].show();
@@ -22,6 +20,11 @@ void draw()
 
 
  void mousePressed(){
+ 	for(int i = 0 ; i<colony.length ; i++){   //clicking resets bacteria position
+ 		colony[i].myX = (int)(Math.random() * width);
+ 		colony[i].myY = (int)(Math.random() * height);
+ 	}
+
  }
 
 
@@ -33,13 +36,12 @@ void draw()
  	{
  		myX = (int)(Math.random() * width);
  		myY = (int)(Math.random() * height);
- 		r = (int)(Math.random()*155)+100;
  		g = (int)(Math.random()*155)+100;
  		b = (int)(Math.random()*155)+100;
  	}
 
  	void show(){
- 		fill(r, g, b);
+ 		fill(100, g, b);
  		ellipse(myX, myY, 15, 15);
  	}
 
@@ -47,27 +49,27 @@ void draw()
  	void walk(){
 
  		if(mouseX > myX){
-			myX = myX + (int)(Math.random()*2);
+			myX = myX + (int)(Math.random()*3);
 
  		}
 
- 		if(mouseX < myX){
- 			myX = myX - (int)(Math.random()*2);
+ 		else if(mouseX < myX){
+ 			myX = myX - (int)(Math.random()*3);
+ 			//0, 1, 2
 
  		}
 
  		if(mouseY > myY){
- 			myY = myY + (int)(Math.random()*2);
- 			//0,1
+ 			myY = myY + (int)(Math.random()*3);
+ 			//try -1, 0, 1, 2
  		}
 
- 		if(mouseY < myY){
- 			//-1,0
- 			myY = myY - (int)(Math.random()*2);
+ 		else if(mouseY < myY){
+ 			myY = myY - (int)(Math.random()*3);
  		}
 
  		else{
- 			//-1,0,1
+ 			//-2, -1, 0, 1, 2
  		myX = myX + (int)(Math.random()*5)-2;
  		myY = myY + (int)(Math.random()*5)-2;
  	}
