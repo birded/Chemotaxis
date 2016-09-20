@@ -1,4 +1,5 @@
 Bacteria [] colony;
+int bgcolor = color(120);
 
 void setup(){
 	stroke(0,0,0,50);
@@ -11,18 +12,42 @@ void setup(){
  }   
 void draw()   
  {    
- 	background(120);
+ 	background(bgcolor);
  	for(int i = 0 ; i<colony.length ; i++){
  		colony[i].walk();
  		colony[i].show();
+
  	}
  }  
 
+void keyPressed(){
+	if(keyCode == 82){ //press R key to reset
+	for(int i = 0 ; i<colony.length ; i++){ 
+ 		colony[i].myX = (int)(Math.random() * width);
+ 		colony[i].myY = (int)(Math.random() * height);		
+	}
+}
+if(keyCode == 32){ //press space key to toggle ignore
+	for(int i = 0 ; i<colony.length ; i++){ 
+		if(colony[i].ignore == false){
+ 			colony[i].ignore = true;
+ 		}
+ 		else if(colony[i].ignore == true){
+ 			colony[i].ignore = false;
+ 		}
+	}
+}
+}
 
  void mousePressed(){
- 	for(int i = 0 ; i<colony.length ; i++){   //clicking resets bacteria position
- 		colony[i].myX = (int)(Math.random() * width);
- 		colony[i].myY = (int)(Math.random() * height);
+ 	for(int i = 0 ; i<colony.length ; i++){   //clicking changes between scared/not
+
+ 		if(colony[i].scared){
+ 			colony[i].scared = false; //attract 
+ 		}
+ 		else if(!colony[i].scared){
+ 			colony[i].scared = true;
+ 		}
  	}
 
  }
@@ -31,6 +56,7 @@ void draw()
  class Bacteria    
  {     
  	int myX, myY, r, g, b;
+ 	boolean scared, ignore;
 
  	Bacteria()
  	{
@@ -38,6 +64,8 @@ void draw()
  		myY = (int)(Math.random() * height);
  		g = (int)(Math.random()*155)+100;
  		b = (int)(Math.random()*155)+100;
+ 		scared = true;
+ 		ignore = false;
  	}
 
  	void show(){
@@ -47,6 +75,42 @@ void draw()
 
 
  	void walk(){
+
+ 		if( (scared && ignore) || (!scared && ignore)){
+ 			//-1, 0, 1
+ 		myX = myX + (int)(Math.random()*3)-1;
+ 		myY = myY + (int)(Math.random()*3)-1;
+ 		}
+
+ 	else if(scared){
+
+ 		if(mouseX > myX){
+			myX = myX - (int)(Math.random()*3);
+
+ 		}
+
+ 		else if(mouseX < myX){
+ 			myX = myX + (int)(Math.random()*3);
+ 			//0, 1, 2
+
+ 		}
+
+ 		if(mouseY > myY){
+ 			myY = myY - (int)(Math.random()*3);
+ 		}
+
+ 		else if(mouseY < myY){
+ 			myY = myY + (int)(Math.random()*3);
+ 		}
+
+ 		else{
+ 			//-1, 0, 1
+ 		myX = myX + (int)(Math.random()*3)-1;
+ 		myY = myY + (int)(Math.random()*3)-1;
+ 		}
+ 	}
+
+ 	else if(!scared){
 
  		if(mouseX > myX){
 			myX = myX + (int)(Math.random()*3);
@@ -61,7 +125,6 @@ void draw()
 
  		if(mouseY > myY){
  			myY = myY + (int)(Math.random()*3);
- 			//try -1, 0, 1, 2
  		}
 
  		else if(mouseY < myY){
@@ -69,10 +132,27 @@ void draw()
  		}
 
  		else{
- 			//-2, -1, 0, 1, 2
- 		myX = myX + (int)(Math.random()*5)-2;
- 		myY = myY + (int)(Math.random()*5)-2;
+ 			//-1, 0, 1
+ 		myX = myX + (int)(Math.random()*3)-1;
+ 		myY = myY + (int)(Math.random()*3)-1;
+ 		}
+
  	}
+
+ 		//do not go out of bounds
+ 		if(myX > 484){
+ 			myX = 484;
+ 		}
+ 		if( myX < 14){
+ 			myX = 14;
+ 		}
+
+ 		if(myY > 484){
+ 			myY = 484;
+ 		}
+ 		if(myY < 14){
+ 			myY = 14;
+ 		}
  	}
 
 
