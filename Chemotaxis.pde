@@ -2,8 +2,8 @@ Bacteria [] colony;
 int bgcolor = color(120);
 
 void setup(){
-	stroke(0,0,0,50);
- 	colony = new Bacteria[30];
+	 noStroke();
+ 	colony = new Bacteria[40];
  	for(int i = 0; i<colony.length; i++){
  		colony[i] = new Bacteria();
  	}
@@ -140,18 +140,18 @@ if(keyCode == 32){ //press space key to toggle ignore
  	}
 
  		//do not go out of bounds
- 		if(myX > 484){
- 			myX = 484;
+ 		if(myX > 492){
+ 			myX = 492;
  		}
- 		if( myX < 14){
- 			myX = 14;
+ 		if( myX < 8){
+ 			myX = 8;
  		}
 
- 		if(myY > 484){
- 			myY = 484;
+ 		if(myY > 492){
+ 			myY = 492;
  		}
- 		if(myY < 14){
- 			myY = 14;
+ 		if(myY < 8){
+ 			myY = 8;
  		}
  	}
 
